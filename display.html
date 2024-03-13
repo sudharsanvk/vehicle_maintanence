@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    table, tr, th,td{
+        border:2px solid black;
+    }
+</style>
+<body>
+
+    <table id="disp-table">
+        
+
+    </table>
+    
+</body>
+<script>
+    fetch("http://localhost:2000/")
+    .then((data)=>data.json())
+    .then((data)=>{
+        console.log(data)
+        var temp = `<tr>
+            <th>bus no</th>
+        <th>brand</th>
+        <th>model</th>
+        <th>eng_type</th>
+        </tr>`
+        data.map((item)=>{
+            temp += `<tr><td>${item.bus_no}</td>
+            <td>${item.brand}</td>
+            <td>${item.model}</td>
+            <td>${item.eng_type}</td>
+            <td><button onclick="deleteVehicle('${item._id}')" type="button">Delete</button>
+</td>
+            </tr>`
+        })
+
+        document.getElementById("disp-table").innerHTML = temp;
+    })
+
+    function deleteVehicle(id)
+    {   
+        console.log("first")
+        fetch(`http://localhost:2000/delete/${id}`,{method:'delete'})
+    }
+
+    
+
+</script>
+</html>
+
